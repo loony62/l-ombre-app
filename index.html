@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'OMBRE — Générateur de paroles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0A0A0A;
+      color: #E8E0D5;
+      min-height: 100vh;
+      font-family: 'Crimson Text', Georgia, serif;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(196,146,58,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(30,45,80,0.12) 0%, transparent 50%);
+    }
+
+    header {
+      border-bottom: 1px solid rgba(196,146,58,0.2);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .header-label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: #C4923A;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-style: italic;
+      color: #F0E8DC;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #C4923A;
+      margin: 1.2rem auto 1rem;
+      opacity: 0.5;
+    }
+
+    .subtitle {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.75rem;
+      color: #5A5248;
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    main {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .section-label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #C4923A;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .theme-btn {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 0.75rem 0.5rem;
+      color: #8A7F72;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+    }
+
+    .theme-btn:hover { border-color: rgba(196,146,58,0.3); color: #C4923A; }
+
+    .theme-btn.active {
+      background: rgba(196,146,58,0.15);
+      border-color: rgba(196,146,58,0.5);
+      color: #C4923A;
+    }
+
+    .theme-icon { font-size: 1.1rem; margin-bottom: 0.3rem; }
+
+    .custom-label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: #5A5248;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 0.9rem 1rem;
+      color: #E8E0D5;
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.95rem;
+      resize: none;
+      outline: none;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    textarea::placeholder { color: #3A3530; }
+
+    #generate-btn {
+      width: 100%;
+      padding: 1.1rem;
+      background: rgba(196,146,58,0.18);
+      border: 1px solid rgba(196,146,58,0.3);
+      border-radius: 4px;
+      color: #C4923A;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #generate-btn:disabled {
+      background: rgba(196,146,58,0.05);
+      color: #3A3530;
+      cursor: not-allowed;
+    }
+
+    #error {
+      margin-top: 1rem;
+      color: #8B3A3A;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.8rem;
+      text-align: center;
+      display: none;
+    }
+
+    #lyrics-section {
+      margin-top: 3rem;
+      border-top: 1px solid rgba(196,146,58,0.12);
+      padding-top: 2.5rem;
+      display: none;
+    }
+
+    .lyrics-label {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: #3A3530;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    #lyrics-content .section-tag {
+      color: #C4923A;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    #lyrics-content .lyric-line {
+      line-height: 1.85;
+      color: #E8E0D5;
+      font-size: 0.95rem;
+    }
+
+    #regen-btn {
+      display: block;
+      margin: 2.5rem auto 0;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 0.7rem 1.8rem;
+      color: #5A5248;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: #2A2520;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Générateur de paroles IA</div>
+  <h1>L'OMBRE</h1>
+  <div class="divider"></div>
+  <p class="subtitle">Creil · Lens · Entre deux eaux</p>
+</header>
+
+<main>
+  <div class="section-label">Choisir un thème</div>
+  <div class="theme-grid">
+    <button class="theme-btn" data-value="l'amour qu'on cherche et qu'on rate, la solitude affective, vouloir être compris sans expliquer">
+      <div class="theme-icon">♥</div>Amour perdu
+    </button>
+    <button class="theme-btn" data-value="les parents qui ont sacrifié, la dette invisible, l'amour qu'on n'arrive pas à dire en face">
+      <div class="theme-icon">⌂</div>La famille
+    </button>
+    <button class="theme-btn" data-value="la dignité face à la précarité, payer son loyer seul, ne pas avoir à appeler sa mère">
+      <div class="theme-icon">◈</div>L'argent
+    </button>
+    <button class="theme-btn" data-value="Creil et Lens, les barres HLM, les terrils, les amis restés, ceux qui sont partis">
+      <div class="theme-icon">▣</div>Le quartier
+    </button>
+    <button class="theme-btn" data-value="rap engagé et conscient, mémoire collective, histoire africaine effacée, écriture comme acte politique">
+      <div class="theme-icon">✊</div>Conscience
+    </button>
+    <button class="theme-btn" data-value="entre Sénégal et Nord de la France, trop africain pour certains, trop français pour d'autres, l'entre-deux permanent">
+      <div class="theme-icon">◑</div>Identité
+    </button>
+  </div>
+
+  <div class="custom-label">Ou écrire ton propre thème</div>
+  <textarea id="custom-input" rows="2" placeholder="Ex : la nuit avant un entretien, les mains de mon père..."></textarea>
+
+  <button id="generate-btn">Générer le morceau</button>
+  <div id="error"></div>
+
+  <div id="lyrics-section">
+    <div class="lyrics-label">— Paroles —</div>
+    <div id="lyrics-content"></div>
+    <button id="regen-btn">Réécrire</button>
+  </div>
+</main>
+
+<footer>L'OMBRE — Artiste IA · Creil / Lens</footer>
+
+<script>
+  let selectedTheme = "";
+
+  document.querySelectorAll(".theme-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".theme-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedTheme = btn.dataset.value;
+      document.getElementById("custom-input").value = "";
+    });
+  });
+
+  document.getElementById("custom-input").addEventListener("input", () => {
+    document.querySelectorAll(".theme-btn").forEach(b => b.classList.remove("active"));
+    selectedTheme = "";
+  });
+
+  async function generate() {
+    const custom = document.getElementById("custom-input").value.trim();
+    const theme = custom || selectedTheme;
+    if (!theme) return;
+
+    const btn = document.getElementById("generate-btn");
+    const errorEl = document.getElementById("error");
+    btn.disabled = true;
+    btn.textContent = "L'Ombre écrit...";
+    errorEl.style.display = "none";
+
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme }),
+      });
+      const data = await res.json();
+
+      if (data.lyrics) {
+        renderLyrics(data.lyrics);
+      } else {
+        errorEl.textContent = data.error || "Erreur inattendue.";
+        errorEl.style.display = "block";
+      }
+    } catch (e) {
+      errorEl.textContent = "Erreur de connexion.";
+      errorEl.style.display = "block";
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Générer le morceau";
+    }
+  }
+
+  function renderLyrics(text) {
+    const container = document.getElementById("lyrics-content");
+    container.innerHTML = "";
+
+    text.split("\n").forEach(line => {
+      const div = document.createElement("div");
+      if (/^\[.*\]$/.test(line.trim())) {
+        div.className = "section-tag";
+        div.textContent = line;
+      } else if (line.trim() === "") {
+        div.style.height = "0.4rem";
+      } else {
+        div.className = "lyric-line";
+        div.textContent = line;
+      }
+      container.appendChild(div);
+    });
+
+    const section = document.getElementById("lyrics-section");
+    section.style.display = "block";
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  document.getElementById("generate-btn").addEventListener("click", generate);
+  document.getElementById("regen-btn").addEventListener("click", generate);
+</script>
+
+</body>
+</html>
