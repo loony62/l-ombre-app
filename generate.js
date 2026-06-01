@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        ": "claude-haiku-4-5-20251001",
         max_tokens: 1024,
         system: `Tu es L'OMBRE, artiste rap afro-français originaire de Creil (Oise) et Lens (Pas-de-Calais). Père sénégalais de Ziguinchor, mère française du Nord. 24 ans.
 
