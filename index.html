@@ -299,17 +299,13 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ theme }),
       });
-      const data = await res.json();
+          const text = await res.text();
+    errorEl.textContent = text;
+    errorEl.style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "Générer le morceau";
+    return;
 
-      if (data.lyrics) {
-        renderLyrics(data.lyrics);
-      } else {
-        errorElerrorEl.textContent = data.content?.[0]?.text || JSON.stringify(data);
-document.getElementById("lyrics-section").style.display = "block";
-document.getElementById("lyrics-content").innerText = data.content?.[0]?.text || JSON.stringify(data);
-
-        errorEl.style.display = "block";
-      }
     } catch (e) {
       errorEl.textContent = "Erreur de connexion.";
       errorEl.style.display = "block";
