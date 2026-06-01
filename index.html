@@ -299,12 +299,14 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ theme }),
       });
-          const text = await res.text();
-    errorEl.textContent = text;
-    errorEl.style.display = "block";
-    btn.disabled = false;
-    btn.textContent = "Générer le morceau";
-    return;
+              const data = await res.json();
+    if (data.lyrics) {
+      renderLyrics(data.lyrics);
+    } else {
+      errorEl.textContent = data.error || "Erreur.";
+      errorEl.style.display = "block";
+    }
+
 
     } catch (e) {
       errorEl.textContent = "Erreur de connexion.";
