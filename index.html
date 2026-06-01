@@ -304,7 +304,10 @@
       if (data.lyrics) {
         renderLyrics(data.lyrics);
       } else {
-        errorEl.textContent = JSON.stringify(data);
+        errorElerrorEl.textContent = data.content?.[0]?.text || JSON.stringify(data);
+document.getElementById("lyrics-section").style.display = "block";
+document.getElementById("lyrics-content").innerText = data.content?.[0]?.text || JSON.stringify(data);
+
         errorEl.style.display = "block";
       }
     } catch (e) {
