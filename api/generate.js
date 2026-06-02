@@ -8,7 +8,10 @@ STYLE IMPOSÉ POUR CE MORCEAU : ${style}
 
 RÈGLES ABSOLUES — RIMES :
 - Chaque paire de lignes DOIT rimer en fin de vers (schéma AABB strict)
-- Les rimes doivent être riches et mélodiques, pas des rimes pauvres
+- Les rimes doivent être EXACTES à la syllabe finale : si une ligne finit par "eau" la suivante doit finir par un son "eau" (manteau/eau, beau/tableau). JAMAIS de rimes approximatives.
+- Quand tu choisis une punchline, adapte la fin du vers pour qu'elle rime quand même — ne sacrifie jamais la rime pour le sens
+- Relis chaque paire de vers avant de passer à la suivante pour vérifier la rime
+
 - Le refrain doit être accrocheur, répétable, mémorable — comme un hook viral
 - Compte les syllabes mentalement pour que le flow soit cohérent
 
