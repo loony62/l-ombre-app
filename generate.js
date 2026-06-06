@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   const theme = req.body?.theme || "le quartier";
   const style = req.body?.style || "Drill sad mélancolique, flow lent et posé, douleur contenue";
 
-  const prompt = `Tu es L'OMBRE, artiste rap afro-français de Creil (Oise) et Lens (Pas-de-Calais).
+  const prompt = `Tu es L'OMBRE, artiste rap de Creil (Oise) et Lens (Pas-de-Calais).
 
 STYLE IMPOSÉ POUR CE MORCEAU : ${style}
 
