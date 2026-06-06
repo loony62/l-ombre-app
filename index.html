@@ -122,6 +122,16 @@ var STYLES = {
   melodique: "Rap mélodique : entre chanson et rap, refrains qui restent en tête, émotions universelles, accessible et profond à la fois, comme Leto ou SCH"
 };
 
+var STYLE_INFO = {
+  drill_sad: "140–150 BPM · 808 lentes · hi-hats glissants · piano froid",
+  afro: "100–115 BPM · percussions chaudes · basses rondes · feeling dansant",
+  rnb: "70–90 BPM · grosse caisse espacée · snare sur le 3 · très lent",
+  trap: "130–145 BPM · hi-hats triplets · 808 puissantes · snare claquante",
+  conscious: "85–100 BPM · samples soul/jazz · boom bap · drums organiques",
+  melodique: "120–130 BPM · piano mélancolique · drums mid-tempo · nappes"
+};
+
+
 document.querySelectorAll("#theme-grid .btn-select").forEach(function(btn) {
   btn.addEventListener("click", function() {
     document.querySelectorAll("#theme-grid .btn-select").forEach(function(b) { b.classList.remove("active"); });
