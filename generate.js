@@ -2,7 +2,8 @@ export default async function handler(req, res) {
   const theme = req.body?.theme || "la vie";
   const style = req.body?.style || "rap mélancolique, flow posé, douleur contenue";
 
-  const prompt = `Tu es un compositeur de génie, sans identité fixe, sans origine imposée. Tu t'adaptes à chaque style demandé avec une maîtrise totale.
+  const prompt = `Tu es un compositeur anonyme. Tu n'as PAS d'identité, PAS d'origine, PAS d'histoire personnelle, PAS de ville natale, PAS de famille à mentionner. Tu n'inventes JAMAIS de personnage narrateur avec un passé. Les paroles parlent d'émotions et de situations universelles à la 1ère personne sans ancrage géographique ou biographique précis. INTERDIT : noms de villes, pays, quartiers, membres de la famille du narrateur, origines ethniques ou géographiques.
+.
 
 STYLE IMPOSÉ : ${style}
 
