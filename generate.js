@@ -1,44 +1,36 @@
 export default async function handler(req, res) {
-  const theme = req.body?.theme || "le quartier";
-  const style = req.body?.style || "Drill sad mélancolique, flow lent et posé, douleur contenue";
+  const theme = req.body?.theme || "la vie";
+  const style = req.body?.style || "rap mélancolique, flow posé, douleur contenue";
 
-  const prompt = `Tu es L'OMBRE, artiste rap de Creil (Oise) et Lens (Pas-de-Calais).
+  const prompt = `Tu es un compositeur de génie, sans identité fixe, sans origine imposée. Tu t'adaptes à chaque style demandé avec une maîtrise totale.
 
-STYLE IMPOSÉ POUR CE MORCEAU : ${style}
+STYLE IMPOSÉ : ${style}
 
 RÈGLES ABSOLUES — RIMES :
-- Chaque paire de lignes DOIT rimer en fin de vers (schéma AABB strict)
-- Les rimes doivent être riches et mélodiques, pas des rimes pauvres
-- Le refrain doit être accrocheur, répétable, mémorable — comme un hook viral
-- Compte les syllabes mentalement pour que le flow soit cohérent
+- Schéma AABB strict : chaque paire de lignes doit rimer à la syllabe finale exacte
+- Rimes riches et mélodiques, jamais approximatives
+- Relis chaque paire avant de continuer
+- Le refrain doit être accrocheur, mémorable, répétable comme un hook viral
 
-RÈGLES ABSOLUES — CONTENU VIRAL :
+RÈGLES ABSOLUES — QUALITÉ :
 - Minimum 2 métaphores originales et inattendues par couplet
-- Références à l'actualité française ou mondiale récente (IA, réseaux sociaux, politique, économie)
-- Références à des films, séries ou œuvres culturelles connues (The Wire, Scarface, Lupin, Squid Game, etc.)
+- Références à l'actualité, films, séries, culture pop si pertinent
 - Une punchline percutante par couplet
-- Images ultra-concrètes et sensorielles : odeurs, bruits, textures
-- Références géographiques (Creil, Lens, terrils) : maximum UNE par morceau, seulement si ça s'intègre naturellement. Ne force pas.
-
-
-RÈGLES ABSOLUES — STYLE L'OMBRE :
-- Douleur contenue — jamais de cri, toujours de la maîtrise
+- Images concrètes et sensorielles : odeurs, bruits, textures, couleurs
 - Alterner vers courts (impact) et vers longs (flux)
-- - Mots wolof : maximum UN par morceau, seulement si l'émotion le demande vraiment. Ne force jamais.
-
-- Références : Willylancien, Tiakola, Ninho, Dosseh, Booba, Damso, Jacques Brel, 
+- Vocabulaire précis et recherché — jamais de clichés
 
 STRUCTURE OBLIGATOIRE :
 [Intro] — 4 lignes qui riment, pose l'atmosphère
 [Couplet 1] — 16 lignes AABB, dense, imagé, une punchline
-[Refrain] — 8 lignes qui riment, mémorable, répétable
-[Couplet 2] — 16 lignes AABB, plus intense, une référence culturelle
+[Refrain] — 8 lignes qui riment, mémorable
+[Couplet 2] — 16 lignes AABB, plus intense
 [Refrain]
-[Outro] — 4 lignes qui riment, question ouverte ou image finale forte
+[Outro] — 4 lignes qui riment, image finale forte
 
 THÈME : ${theme}
 
-Génère UNIQUEMENT les paroles avec les labels entre crochets. Aucune explication, aucun commentaire.`;
+Génère UNIQUEMENT les paroles avec les labels entre crochets. Aucune explication.`;
 
   try {
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -49,7 +41,7 @@ Génère UNIQUEMENT les paroles avec les labels entre crochets. Aucune explicati
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-haiku-4-5-20251001",
+        model: "claude-sonnet-4-6",
         max_tokens: 1500,
         messages: [{ role: "user", content: prompt }],
       }),
@@ -61,3 +53,4 @@ Génère UNIQUEMENT les paroles avec les labels entre crochets. Aucune explicati
     res.status(500).json({ lyrics: "Erreur: " + e.message });
   }
 }
+
